@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slider</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="slider">
+      <div class="slide">
+            <img src="https://i.imgur.com/HnQUyN4.png" alt="Photo1"/>
+        </div>
+      <div class="slide">
+            <img src="https://i.imgur.com/c66XsJV.png" alt="Photo3"/>
+        </div> 
+      <div class="slide">
+            <img src="https://i.imgur.com/OUXeMPj.png" alt="Photo2"/>
+        </div>
+      <div class="slide">
+            <img src="https://i.imgur.com/Qy0QmiX.png" alt="Photo3"/>
+        </div> 
+      <div class="slide">
+            <img src="https://i.imgur.com/0Bm04Ma.png" alt="Photo3"/>
+        </div>
+        <div class="slide">
+            <img src="https://i.imgur.com/nZc13ut.png" alt="Photo3"/>
+        </div>
+
+        <button class="btn-slide prev"><i class="fas fa-3x fa-chevron-circle-left"></i></button>
+        <button class="btn-slide next"><i class="fas fa-3x fa-chevron-circle-right"></i></button>
+      
+    </div>
+    <div class="dots-container">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+      <span class="dot" data-slide="3"></span>
+    </div>
+    <script>
+        function Slider() {
+            const carouselSlides = document.querySelectorAll('.slide');
+            const btnPrev = document.querySelector('.prev');
+            const btnNext = document.querySelector('.next');
+            const dotsSlide = document.querySelector('.dots-container');
+            let currentSlide = 0;
+          
+            const activeDot = function (slide) {
+                document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+                document.querySelector(`.dot[data-slide="${slide}"]`).classList.add('active');
+            };
+            activeDot(currentSlide);
+        
+            const changeSlide = function (slides) {
+                carouselSlides.forEach((slide, index) => (slide.style.transform = `translateX(${100 * (index - slides)}%)`));
+            };
+            changeSlide(currentSlide);
+        
+            btnNext.addEventListener('click', function () {
+                currentSlide++; 
+                if (carouselSlides.length - 1 < currentSlide) {
+                    currentSlide = 0;
+                };
+                changeSlide(currentSlide);
+                activeDot(currentSlide);
+        });
+            btnPrev.addEventListener('click', function () {
+                currentSlide--;
+                if (0 >= currentSlide) {
+                    currentSlide = 0;
+                }; 
+                changeSlide(currentSlide);
+                activeDot(currentSlide);
+            });
+        
+            dotsSlide.addEventListener('click', function (e) {
+                if (e.target.classList.contains('dot')) {
+                    const slide = e.target.dataset.slide;
+                    changeSlide(slide);
+                    activeDot(slide);
+                }
+            });
+          };
+        Slider();
+    </script>
+</body>
+</html>
